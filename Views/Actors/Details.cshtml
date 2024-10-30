@@ -1,0 +1,75 @@
+﻿@model Fall2024_Assignment3_eschwalbach.Models.ViewModels.ActorDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Actor</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Actor.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Actor.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Actor.Gender)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Actor.Gender)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Actor.Age)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Actor.Age)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Actor.Imdb)
+        </dt>
+        <dd class="col-sm-10">
+            <a href="@Model.Actor.Imdb" target="_blank">IMDB Link</a>
+        </dd>
+        <dt class="col-sm-2">
+            Photo
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.Actor.Photo" alt="@Model.Actor.Name photo" style="max-width: 200px;" />
+        </dd>
+    </dl>
+
+    <h4>Movies</h4>
+    <ul>
+        @foreach (var movie in Model.Movies)
+        {
+            <li><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></li>
+        }
+    </ul>
+
+    <h4>Overall Sentiment: @Model.OverallSentiment.ToString("F2")</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tweets</th>
+                <th>Sentiment</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var (Tweet, Sentiment) in Model.Tweets)
+            {
+                <tr>
+                    <td>@Tweet</td>
+                    <td>@Sentiment.ToString("F2")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Actor.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
